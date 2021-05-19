@@ -5,6 +5,8 @@
 ### 카카오 디벨로퍼에 서비스 포트 등록
 ### python -m SimpleHTTPServer 9090 서버 호스팅
 ### npm install timekit-booking --save
+### npm install jquery
+###choco install curl
 
 ## used opensource
 
