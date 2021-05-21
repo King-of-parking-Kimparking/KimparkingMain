@@ -1,0 +1,53 @@
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+<form action="http://localhost/login.php">
+    <fieldset>
+        <legend>성명</legend>
+            <input type="text" id="nameField" ></input>
+    </fieldset>
+    <fieldset id = "timeId">
+        <legend>희망주차시간</legend>
+        <!--
+        <p> 9시 <input type="checkbox" name="usingtime" value="9h" >
+        <p> 10시 <input type="checkbox" name="usingtime" value="10h"></p>
+        -->
+    </fieldset>
+    <fieldset>
+        <legend>차량번호</legend>
+        <p><input type="text" id="carNum"></p>
+    </fieldset>
+    <fieldset>
+        <legend>주소</legend>
+        <p><input type="text" id="address"></p>
+    </fieldset>    
+     <input type="submit" value='예약하기'>
+     <input type="button" value="저장하기" onclick="doSaveAs()">
+     <div id = 'result'></div>
+</form>
+<script>
+    
+    var timeArr = [5,6,7,8];
+
+
+    function doSaveAs(){
+        var nameField = document.getElementById('nameField').value;
+        var usingtime = document.getElementsByName('usingtime').value;
+        var carNum = document.getElementById('carNum').value;
+        var address = document.getElementById('address').value;
+        alert(address);
+    }
+    function makeCbox(){
+        for( var i = 0 ; i < timeArr.length; i++ ){
+            //alert(timeArr[i]);
+            var fieldId = document.getElementById("timeId");
+            fieldId.innerHTML += "<p> "+timeArr[i]+"시 <input type =\"checkbox\" name =\"usingtime\" value =\"" +timeArr[i]+ "\"></p>";
+        }
+    }
+    makeCbox();
+</script>
+</body>
+</html>
