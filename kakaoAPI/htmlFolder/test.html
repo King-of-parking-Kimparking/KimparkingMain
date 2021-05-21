@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>주차장 예약</title>
+</head>
+<body>
+  <script type="text/javascript">
+    var _value="";
+    window.onload = function()
+    {
+      var url = unescape(location.href);
+      var pm  = url.split('?');
+
+      var params   = pm[1].split('&');
+      for( var i=0; i<params.length; i++ )
+      {
+      var param = params[i].split('=');
+      //   alert(param[0]+' 의 값은 '+param[1]+' 입니다.');
+      _value=decodeURI(decodeURIComponent(param[1]));
+      alert(_value);
+     }
+    }
+
+
+  </script>
+</body>
+</html>

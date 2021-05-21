@@ -17,8 +17,8 @@ function setLocWrapper(){
   setLocation(locVal);
 }
 
-
-var parkLoc = ["제주특별자치도 제주시 중앙로 235", "제주특별자치도 제주시 중앙로 217", "제주특별자치도 제주시 인다14길 34", "제주특별자치도 제주시 인다14길 25", "제주특별자치도 제주시 인다14길 30", "제주특별자치도 제주시 인다14길 20"];
+// 로케이션 자동추가하기
+var parkLoc = ["제주특별자치도 제주시 중앙로 235", "제주특별자치도 제주시 중앙로 217", "제주특별자치도 제주시 인다14길 34", "제주특별자치도 제주시 인다14길 25", "제주특별자치도 제주시 인다14길 30", "제주특별자치도 제주시 인다14길 20","제주특별자치도 제주시 인다13길 28", "제주특별자치도 제주시 인다13길 34", "제주특별자치도 제주시 인다4길 25-8", "제주특별자치도 제주시 인다2길 67"];
 var parkMarkers = [];
 for(var i = 0; i < parkLoc.length; i++){
   setParkLoc(parkLoc[i]);
@@ -86,7 +86,8 @@ function setParkLoc(locVal){
           var marker = new kakao.maps.Marker({
               map: map,
               position: coords,
-              image: markerImage
+              image: markerImage,
+              clickable: true
           });
 
           // 인포윈도우로 장소에 대한 설명을 표시합니다
@@ -94,6 +95,10 @@ function setParkLoc(locVal){
               content: '<div style="width:150px;text-align:center;padding:6px 0;">' + locVal + '</div>'
           });
           infowindow.open(map, marker);
+          kakao.maps.event.addListener(marker, 'click', function() { // 마커 이벤트 등록
+            // 마커 위에 인포윈도우를 표시합니다
+            window.open("./htmlFolder/test.html?value="+encodeURI(encodeURIComponent(locVal)));
+          });
           parkMarkers.push(marker);
           // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
       }
