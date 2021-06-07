@@ -5,7 +5,7 @@
     <title>주차왕 김파킹</title>
 </head>
 <body>
-// index.html로 변경하기
+
 <div id="map" style="width:1000px;height:600px;"></div>
 <br/>
 <form action="">
@@ -13,8 +13,18 @@
   <input type="button" value = "확인" onclick="setLocWrapper()">
 <br/>
 </form>
+<form action="">
+  <input type="button" value = "예약확인">
+<br/>
+</form>
+
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6003eb95eddd4de5a29ebabc0f0d19a7&libraries=services"></script>
 <script src="./index.js"> </script>
 
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="./getDB.js"> </script>
+<script>
+  alert(lines);
+</script>
 </body>
 </html>

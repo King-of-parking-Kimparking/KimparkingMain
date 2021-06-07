@@ -1,31 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>주차장 예약</title>
-</head>
-<body>
-  <script type="text/javascript">
-    var _value="";
-    window.onload = function()
-    {
-      var url = unescape(location.href);
-      var pm  = url.split('?');
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="/home/cwjang/projects/jspsych/jquery-csv-master/src/jquery.csv.js"></script>
 
-      var params   = pm[1].split('&');
-      for( var i=0; i<params.length; i++ )
-      {
-      var param = params[i].split('=');
-      //   alert(param[0]+' 의 값은 '+param[1]+' 입니다.');
-      _value=decodeURI(decodeURIComponent(param[1]));
-      
-
-     }
-    }
+    <script>
 
 
-  </script>
-</body>
+        function read_with_ajax(url,fun,holder){//url,function,just a placeholder
+        holder = new XMLHttpRequest();
+
+        holder.open('GET',url);
+        holder.onload=fun;
+        holder.send()
+
+        }
+
+        function alertTxt(){
+            alert(this.response);
+            allText = this.response;
+            var allTextLines = allText.split(/\r\n|\n/);
+            var headers = allTextLines[0].split(',');
+            var lines = [];
+
+            for (var i = 1; i < allTextLines.length; i++) {
+                var data = allTextLines[i].split(',');
+                if (data.length == headers.length) {
+
+                    var tarr = [];
+                    for (var j = 0; j < headers.length; j++) {
+                        tarr.push(headers[j] + ":" + data[j]);
+                    }
+                    lines.push(tarr);
+                }
+            }
+
+            alert(lines[1][4])
+        }
+
+        window.onload=function(){
+            read_with_ajax('employee.csv',alertTxt)
+        }
+
+
+
+    </script>
+    </head>
+    <body>
+
+    </body>
 </html>
