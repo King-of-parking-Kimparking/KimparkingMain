@@ -18,11 +18,8 @@ function setLocWrapper(){
 }
 
 // 로케이션 자동추가하기
-var parkLoc = ["제주특별자치도 제주시 중앙로 235", "제주특별자치도 제주시 중앙로 217", "제주특별자치도 제주시 인다14길 34", "제주특별자치도 제주시 인다14길 25", "제주특별자치도 제주시 인다14길 30", "제주특별자치도 제주시 인다14길 20","제주특별자치도 제주시 인다13길 28", "제주특별자치도 제주시 인다13길 34", "제주특별자치도 제주시 인다4길 25-8", "제주특별자치도 제주시 인다2길 67"];
+
 var parkMarkers = [];
-for(var i = 0; i < parkLoc.length; i++){
-  setParkLoc(parkLoc[i]);
-}
 
 function setLocation(locVal){
   geocoder.addressSearch(locVal, function(result, status) {
@@ -64,7 +61,7 @@ function createMarkerImage(src, size, options) {
     return markerImage;
 }
 
-function setParkLoc(locVal){
+function setParkLoc(locVal, startTime, endTime){
   geocoder.addressSearch(locVal, function(result, status) {
 
       // 정상적으로 검색이 완료됐으면
@@ -91,10 +88,93 @@ function setParkLoc(locVal){
           });
 
           // 인포윈도우로 장소에 대한 설명을 표시합니다
-          var infowindow = new kakao.maps.InfoWindow({
-              content: '<div style="width:150px;text-align:center;padding:6px 0;">' + locVal + '</div>'
+          var infowindow;
+          if(startTime == "0:00" && endTime == "0:00"){
+            infowindow = new kakao.maps.InfoWindow({
+                content: '<div style="width:150px;text-align:center;padding:6px 0;">' + '시간제한 없음' + '</div>'
+            });
+          }
+          else {
+            infowindow = new kakao.maps.InfoWindow({
+                content: '<div style="width:150px;text-align:center;padding:6px 0;">' + '시작시간: ' + startTime + '<br>종료시간: ' + endTime + '</div>'
+            });
+          }
+
+          //infowindow.open(map, marker);
+          kakao.maps.event.addListener(marker, 'mouseover', function() {
+            // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+              infowindow.open(map, marker);
           });
-          infowindow.open(map, marker);
+
+          // 마커에 마우스아웃 이벤트를 등록합니다
+          kakao.maps.event.addListener(marker, 'mouseout', function() {
+              // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+              infowindow.close();
+          });
+
+          kakao.maps.event.addListener(marker, 'click', function() { // 마커 이벤트 등록
+            // 마커 위에 인포윈도우를 표시합니다
+            window.open("./htmlFolder/test.html?value="+encodeURI(encodeURIComponent(locVal)));
+          });
+          parkMarkers.push(marker);
+          // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+      }
+      else{
+      }
+  });
+}
+
+
+function setPaidParkLoc(locVal, startTime, endTime){
+  geocoder.addressSearch(locVal, function(result, status) {
+
+      // 정상적으로 검색이 완료됐으면
+       if (status === kakao.maps.services.Status.OK) {
+          var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+          var markerImageSrc = './img/bitCoin2.png';
+
+
+          var imageSize = new kakao.maps.Size(24, 23),
+            imageOptions = {
+                offset: new kakao.maps.Point(12, 23)
+            };
+
+          // 마커이미지와 마커를 생성합니다
+          var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions);
+
+          // 결과값으로 받은 위치를 마커로 표시합니다
+          var marker = new kakao.maps.Marker({
+              map: map,
+              position: coords,
+              image: markerImage,
+              clickable: true
+          });
+
+          // 인포윈도우로 장소에 대한 설명을 표시합니다
+          var infowindow;
+          if(startTime == "0:00" && endTime == "0:00"){
+            infowindow = new kakao.maps.InfoWindow({
+                content: '<div style="width:150px;text-align:center;padding:6px 0;">' + '시간제한 없음' + '</div>'
+            });
+          }
+          else {
+            infowindow = new kakao.maps.InfoWindow({
+                content: '<div style="width:150px;text-align:center;padding:6px 0;">' + '시작시간: ' + startTime + '<br>종료시간: ' + endTime + '</div>'
+            });
+          }
+
+          //infowindow.open(map, marker);
+          kakao.maps.event.addListener(marker, 'mouseover', function() {
+            // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+              infowindow.open(map, marker);
+          });
+
+          // 마커에 마우스아웃 이벤트를 등록합니다
+          kakao.maps.event.addListener(marker, 'mouseout', function() {
+              // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+              infowindow.close();
+          });
+
           kakao.maps.event.addListener(marker, 'click', function() { // 마커 이벤트 등록
             // 마커 위에 인포윈도우를 표시합니다
             window.open("./htmlFolder/test.html?value="+encodeURI(encodeURIComponent(locVal)));

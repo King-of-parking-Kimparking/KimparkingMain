@@ -22,14 +22,21 @@ function alertTxt(){
 
             var tarr = [];
             for (var j = 0; j < headers.length; j++) {
-                tarr.push(headers[j] + ":" + data[j]);
+                //tarr.push(headers[j] + ":" + data[j]);
+                tarr.push(data[j]);
             }
             lines.push(tarr);
         }
     }
-
-    //alert(lines[1][4])
+    for(var i = 0; i < lines.length; i++)
+      if(lines[i][5] != ""){
+        if(lines[i][16] == "유료")
+            setPaidParkLoc(lines[i][5], lines[i][10], lines[i][11]);
+        else
+          setParkLoc(lines[i][5], lines[i][10], lines[i][11]);
+      }
 }
 
 var lines = [];
-read_with_ajax('./DataBase/employee.csv',alertTxt)
+read_with_ajax('./DataBase/jejuParking.csv',alertTxt)
+read_with_ajax('./DataBase/seoGuiPo.csv',alertTxt)
