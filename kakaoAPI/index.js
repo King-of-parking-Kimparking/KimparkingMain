@@ -20,12 +20,17 @@ function setLocWrapper(){
 // 로케이션 자동추가하기
 
 var parkMarkers = [];
+var mainMarker;
+var mainInfowindow;
 
 function setLocation(locVal){
   geocoder.addressSearch(locVal, function(result, status) {
-
       // 정상적으로 검색이 완료됐으면
        if (status === kakao.maps.services.Status.OK) {
+          if(mainMarker != null){
+            mainInfowindow.close();
+            mainMarker.setMap(null); // 기존마커삭제
+          }
           map.setLevel(5); // 지도의 레벨 변경
           var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
@@ -35,17 +40,17 @@ function setLocation(locVal){
           // 마커이미지와 마커를 생성합니다
           var markerImage = new kakao.maps.MarkerImage(markerImageSrc, imageSize);
           // 결과값으로 받은 위치를 마커로 표시합니다
-          var marker = new kakao.maps.Marker({
+          mainMarker = new kakao.maps.Marker({
               map: map,
               position: coords,
               image: markerImage
           });
 
           // 인포윈도우로 장소에 대한 설명을 표시합니다
-          var infowindow = new kakao.maps.InfoWindow({
+          mainInfowindow = new kakao.maps.InfoWindow({
               content: '<div style="width:150px;text-align:center;padding:6px 0;">주차장 검색 위치</div>'
           });
-          infowindow.open(map, marker);
+          mainInfowindow.open(map, mainMarker);
 
           // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
           map.setCenter(coords);
@@ -61,7 +66,7 @@ function createMarkerImage(src, size, options) {
     return markerImage;
 }
 
-function setParkLoc(locVal, startTime, endTime){
+function setParkLoc(locVal, startTime, endTime, parkData){
   geocoder.addressSearch(locVal, function(result, status) {
 
       // 정상적으로 검색이 완료됐으면
@@ -114,7 +119,11 @@ function setParkLoc(locVal, startTime, endTime){
 
           kakao.maps.event.addListener(marker, 'click', function() { // 마커 이벤트 등록
             // 마커 위에 인포윈도우를 표시합니다
-            window.open("./htmlFolder/test.html?value="+encodeURI(encodeURIComponent(locVal)));
+            var tempStr = "";
+            for(var i = 0; i < parkData.length; i++)
+              tempStr += parkData[i] + "$";
+            //alert(tempStr);
+            window.open("./htmlFolder/test.html?value="+encodeURI(encodeURIComponent(tempStr)));
           });
           parkMarkers.push(marker);
           // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
@@ -125,7 +134,7 @@ function setParkLoc(locVal, startTime, endTime){
 }
 
 
-function setPaidParkLoc(locVal, startTime, endTime){
+function setPaidParkLoc(locVal, startTime, endTime, parkData){
   geocoder.addressSearch(locVal, function(result, status) {
 
       // 정상적으로 검색이 완료됐으면
@@ -177,7 +186,11 @@ function setPaidParkLoc(locVal, startTime, endTime){
 
           kakao.maps.event.addListener(marker, 'click', function() { // 마커 이벤트 등록
             // 마커 위에 인포윈도우를 표시합니다
-            window.open("./htmlFolder/test.html?value="+encodeURI(encodeURIComponent(locVal)));
+            var tempStr = "";
+            for(var i = 0; i < parkData.length; i++)
+              tempStr += parkData[i] + "$";
+            //alert(tempStr);
+            window.open("./htmlFolder/test.html?value="+encodeURI(encodeURIComponent(tempStr)));
           });
           parkMarkers.push(marker);
           // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다

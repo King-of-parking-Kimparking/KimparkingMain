@@ -30,10 +30,10 @@ function alertTxt(){
     }
     for(var i = 0; i < lines.length; i++)
       if(lines[i][5] != ""){
-        if(lines[i][16] == "유료")
-            setPaidParkLoc(lines[i][5], lines[i][10], lines[i][11]);
+        if(lines[i][16] == "무료")
+            setParkLoc(lines[i][5], lines[i][10], lines[i][11], lines[i]);
         else
-          setParkLoc(lines[i][5], lines[i][10], lines[i][11]);
+          setPaidParkLoc(lines[i][5], lines[i][10], lines[i][11], lines[i]);
       }
 }
 
