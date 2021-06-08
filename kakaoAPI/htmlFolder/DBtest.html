@@ -1,52 +1,18 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="/home/cwjang/projects/jspsych/jquery-csv-master/src/jquery.csv.js"></script>
+  <meta charset="UTF-8">
+</head>
+  <body>
+
+    <script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
 
     <script>
 
-
-        function read_with_ajax(url,fun,holder){//url,function,just a placeholder
-        holder = new XMLHttpRequest();
-
-        holder.open('GET',url);
-        holder.onload=fun;
-        holder.send()
-
-        }
-
-        function alertTxt(){
-            alert(this.response);
-            allText = this.response;
-            var allTextLines = allText.split(/\r\n|\n/);
-            var headers = allTextLines[0].split(',');
-            var lines = [];
-
-            for (var i = 1; i < allTextLines.length; i++) {
-                var data = allTextLines[i].split(',');
-                if (data.length == headers.length) {
-
-                    var tarr = [];
-                    for (var j = 0; j < headers.length; j++) {
-                        tarr.push(headers[j] + ":" + data[j]);
-                    }
-                    lines.push(tarr);
-                }
-            }
-
-            alert(lines[1][4])
-        }
-
-        window.onload=function(){
-            read_with_ajax('employee.csv',alertTxt)
-        }
-
-
-
     </script>
-    </head>
-    <body>
-
-    </body>
+  </body>
 </html>
