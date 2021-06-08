@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>주차장 예약</title>
+</head>
+<body>
+  <div id="result"></div>
+  <script type="text/javascript">
+    var _value="";
+    window.onload = function()
+    {
+      var url = unescape(location.href);
+      var pm  = url.split('?');
+
+      var params   = pm[1].split('&');
+      for( var i=0; i<params.length; i++ )
+      {
+      var param = params[i].split('=');
+      //   alert(param[0]+' 의 값은 '+param[1]+' 입니다.');
+      _value=decodeURI(decodeURIComponent(param[1]));
+      var tempArr = _value.split('$');
+      var parkInfo = [];
+      for(var i = 0; i < tempArr.length; i++)
+        if(i == 1 || i == 5 || i == 6 || i == 10 || i == 11 || i == 16 || i == 17 || i == 18 || i == 19 || i == 20 || i == 25)
+          parkInfo.push(tempArr[i]);
+      var indexArr =	['주차장명',	'소재지지번주소',	'주차공간수',	'운영시작시각',	'운영종료시각',	'요금정보', '주차기본시간',	'주차기본요금',	'추가단위시간',	'추가단위요금', '특기사항']
+
+      if(parkInfo[5] == "무료"){
+        for(var i = 0; i < 6; i++)
+          result.innerHTML += indexArr[i]+ " : " + parkInfo[i] + "<br>";
+        result.innerHTML += indexArr[indexArr.length-1]+ " : " + parkInfo[indexArr.length-1] + "<br>";
+      }
+      else{
+        for(var i = 0; i < indexArr.length; i++)
+          result.innerHTML += indexArr[i]+ " : " + parkInfo[i] + "<br>";
+      }
+      
+     }
+    }
+
+
+  </script>
+</body>
+</html>
