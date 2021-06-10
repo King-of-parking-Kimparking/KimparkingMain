@@ -5,11 +5,9 @@
   <meta charset="UTF-8">
 </head>
   <body>
-    <div>제주 공항 주차장 정보</div>
-    <div id="result">d</div>
 
     <script>
-    ariportParking = "";
+    psiInfo = "";
 
     function loadFileToElement(filename)
     {
@@ -18,23 +16,28 @@
       {
       xmlHTTP.open("GET", filename, false);
       xmlHTTP.send(null);
-      }
+    }
       catch (e) {
           window.alert("Unable to load the requested file.");
           return;
       }
-      ariportParking = xmlHTTP.responseText;
+      psiInfo = xmlHTTP.responseText;
     }
-    loadFileToElement("airportparkingRT.xml");
+    loadFileToElement("./DataBase/getPisInfo.xml");
+    var nofPL = (psiInfo.split("<ISTL_LCTN_ADDR>")).length - 1;//주차장 수
+    var psiInfoarr = [];
 
-    var result = document.getElementById("result");
-    alert(result.innerHTML);
-    result.innerHTML = "전체 주차 수:";
-    document.write( "전체 주차 수:")  ;
+    for(var i = 1; i <= nofPL; i++){
+      psiInfoarr[0] = (psiInfo.split("<ISTL_LCTN_ADDR>")[i]).split("</ISTL_LCTN_ADDR>")[0]; // 주소
+      psiInfoarr[1] = (psiInfo.split("<GNRL_RMND_PRZN_NUM>")[i]).split("</GNRL_RMND_PRZN_NUM>")[0]; // 일반주차
+      psiInfoarr[2] = (psiInfo.split("<HNDC_RMND_PRZN_NUM>")[i]).split("</HNDC_RMND_PRZN_NUM>")[0]; // 장애인 주차
+      psiInfoarr[3] = (psiInfo.split("<HVVH_RMND_PRZN_NUM>")[i]).split("</HVVH_RMND_PRZN_NUM>")[0]; // 대형 주차
+      psiInfoarr[4] = (psiInfo.split("<LGVH_RMND_PRZN_NUM>")[i]).split("</LGVH_RMND_PRZN_NUM>")[0]; // 경차 주차
+      psiInfoarr[5] = (psiInfo.split("<WMON_RMND_PRZN_NUM>")[i]).split("</WMON_RMND_PRZN_NUM>")[0]; // 여성 주차
+    }
 
-    var nofParkingLots = ariportParking.split("<parkingFullSpace>")[i].length;
-    for(var i = 1; i < 3; i++)
-      result.innerHTML += "전체 주차 수: "+(ariportParking.split("<parkingFullSpace>")[i]).split("</parkingFullSpace>")[0]+"\n주차 차량 수: "+(ariportParking.split("<parkingIstay>")[i]).split("</parkingIstay>")[0]);
+    for(var i = 0; i < psiInfoarr.length; i++)
+      alert(psiInfoarr[i]);
 
     </script>
   </body>

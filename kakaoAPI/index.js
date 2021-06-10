@@ -199,3 +199,67 @@ function setPaidParkLoc(locVal, startTime, endTime, parkData){
       }
   });
 }
+
+
+function setRealTimeLoc(locVal, parkInfo1, parkInfo2, parkInfo3, parkInfo4, parkInfo5){
+  geocoder.addressSearch(locVal, function(result, status) {
+
+      // 정상적으로 검색이 완료됐으면
+       if (status === kakao.maps.services.Status.OK) {
+          var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+          var markerImageSrc = './img/live.png';
+
+
+          var imageSize = new kakao.maps.Size(40, 22),
+            imageOptions = {
+                offset: new kakao.maps.Point(20, 22)
+            };
+
+          // 마커이미지와 마커를 생성합니다
+          var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions);
+
+          // 결과값으로 받은 위치를 마커로 표시합니다
+          var marker = new kakao.maps.Marker({
+              map: map,
+              position: coords,
+              image: markerImage,
+              clickable: true
+          });
+
+          // 인포윈도우로 장소에 대한 설명을 표시합니다
+          var infowindow;
+          infowindow = new kakao.maps.InfoWindow({
+              content: '<div style="width:150px;text-align:center;padding:6px 0;">' + '잔여 주차공간'+ parkInfo1 + '</div>'
+          });
+
+          //infowindow.open(map, marker);
+          kakao.maps.event.addListener(marker, 'mouseover', function() {
+            // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+              infowindow.open(map, marker);
+          });
+
+          // 마커에 마우스아웃 이벤트를 등록합니다
+          kakao.maps.event.addListener(marker, 'mouseout', function() {
+              // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+              infowindow.close();
+          });
+
+          kakao.maps.event.addListener(marker, 'click', function() { // 마커 이벤트 등록
+            // 마커 위에 인포윈도우를 표시합니다
+            var tempStr = "";
+
+            tempStr = locVal+"$"+parkInfo1 + "$"+parkInfo2 + "$"+parkInfo3 + "$"+parkInfo4 + "$"+parkInfo5 + "$";
+            //alert(tempStr);
+            window.open("./htmlFolder/test2.html?value="+encodeURI(encodeURIComponent(tempStr)));
+
+          });
+
+          parkMarkers.push(marker);
+          // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+      }
+      else{
+      }
+  });
+
+
+}
