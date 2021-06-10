@@ -5,13 +5,36 @@
   <meta charset="UTF-8">
 </head>
   <body>
-
-    <script
-  src="https://code.jquery.com/jquery-3.6.0.js"
-  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-  crossorigin="anonymous"></script>
+    <div>제주 공항 주차장 정보</div>
+    <div id="result">d</div>
 
     <script>
+    ariportParking = "";
+
+    function loadFileToElement(filename)
+    {
+      var xmlHTTP = new XMLHttpRequest();
+      try
+      {
+      xmlHTTP.open("GET", filename, false);
+      xmlHTTP.send(null);
+      }
+      catch (e) {
+          window.alert("Unable to load the requested file.");
+          return;
+      }
+      ariportParking = xmlHTTP.responseText;
+    }
+    loadFileToElement("airportparkingRT.xml");
+
+    var result = document.getElementById("result");
+    alert(result.innerHTML);
+    result.innerHTML = "전체 주차 수:";
+    document.write( "전체 주차 수:")  ;
+
+    var nofParkingLots = ariportParking.split("<parkingFullSpace>")[i].length;
+    for(var i = 1; i < 3; i++)
+      result.innerHTML += "전체 주차 수: "+(ariportParking.split("<parkingFullSpace>")[i]).split("</parkingFullSpace>")[0]+"\n주차 차량 수: "+(ariportParking.split("<parkingIstay>")[i]).split("</parkingIstay>")[0]);
 
     </script>
   </body>
