@@ -13,7 +13,8 @@ http://openapi.airport.co.kr/service/rest/AirportParking/airportparkingRT?servic
 실시간 주차장 정보
 http://openapi.jejuits.go.kr/OPEN_API/pisInfo/getPisInfo?serviceKey=OYRMsSBisJ8pWvk1mMT3o8YCIxG%2BJ4FTt5Cl0VOO8ilKluACcpZ97HjnePyUy1CWANZpzePsjfsctywjdDN2xg%3D%3D&pageNo=1&numOfRows=20
 
-
+제주 주차장 정보
+https://www.data.go.kr/iim/api/selectAPIAcountView.do
 
 ## license
 
