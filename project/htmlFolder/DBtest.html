@@ -1,52 +1,44 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="/home/cwjang/projects/jspsych/jquery-csv-master/src/jquery.csv.js"></script>
+  <meta charset="UTF-8">
+</head>
+  <body>
 
     <script>
+    psiInfo = "";
 
+    function loadFileToElement(filename)
+    {
+      var xmlHTTP = new XMLHttpRequest();
+      try
+      {
+      xmlHTTP.open("GET", filename, false);
+      xmlHTTP.send(null);
+    }
+      catch (e) {
+          window.alert("Unable to load the requested file.");
+          return;
+      }
+      psiInfo = xmlHTTP.responseText;
+    }
+    loadFileToElement("./DataBase/getPisInfo.xml");
+    var nofPL = (psiInfo.split("<ISTL_LCTN_ADDR>")).length - 1;//주차장 수
+    var psiInfoarr = [];
 
-        function read_with_ajax(url,fun,holder){//url,function,just a placeholder
-        holder = new XMLHttpRequest();
+    for(var i = 1; i <= nofPL; i++){
+      psiInfoarr[0] = (psiInfo.split("<ISTL_LCTN_ADDR>")[i]).split("</ISTL_LCTN_ADDR>")[0]; // 주소
+      psiInfoarr[1] = (psiInfo.split("<GNRL_RMND_PRZN_NUM>")[i]).split("</GNRL_RMND_PRZN_NUM>")[0]; // 일반주차
+      psiInfoarr[2] = (psiInfo.split("<HNDC_RMND_PRZN_NUM>")[i]).split("</HNDC_RMND_PRZN_NUM>")[0]; // 장애인 주차
+      psiInfoarr[3] = (psiInfo.split("<HVVH_RMND_PRZN_NUM>")[i]).split("</HVVH_RMND_PRZN_NUM>")[0]; // 대형 주차
+      psiInfoarr[4] = (psiInfo.split("<LGVH_RMND_PRZN_NUM>")[i]).split("</LGVH_RMND_PRZN_NUM>")[0]; // 경차 주차
+      psiInfoarr[5] = (psiInfo.split("<WMON_RMND_PRZN_NUM>")[i]).split("</WMON_RMND_PRZN_NUM>")[0]; // 여성 주차
+    }
 
-        holder.open('GET',url);
-        holder.onload=fun;
-        holder.send()
-
-        }
-
-        function alertTxt(){
-            alert(this.response);
-            allText = this.response;
-            var allTextLines = allText.split(/\r\n|\n/);
-            var headers = allTextLines[0].split(',');
-            var lines = [];
-
-            for (var i = 1; i < allTextLines.length; i++) {
-                var data = allTextLines[i].split(',');
-                if (data.length == headers.length) {
-
-                    var tarr = [];
-                    for (var j = 0; j < headers.length; j++) {
-                        tarr.push(headers[j] + ":" + data[j]);
-                    }
-                    lines.push(tarr);
-                }
-            }
-
-            alert(lines[1][4])
-        }
-
-        window.onload=function(){
-            read_with_ajax('employee.csv',alertTxt)
-        }
-
-
+    for(var i = 0; i < psiInfoarr.length; i++)
+      alert(psiInfoarr[i]);
 
     </script>
-    </head>
-    <body>
-
-    </body>
+  </body>
 </html>

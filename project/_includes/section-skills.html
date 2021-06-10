@@ -1,23 +1,30 @@
 <h1 class="title">{{site.skills_title}}</h1>
 
 
+<strong><div style="color:red;">제주 공항 주차장 정보</div></strong>
+<table width = "50%"  style="color: red;">
+  <tr>
+    <td id="result1"></td>
+    <td id="result2"></td>
+  </tr>
+</table>
 <div id="map" style="width:100%;height:600px;"></div>
 <br/>
 <form action="">
   주차장 검색 : <input type="text" id="locInput" name="location" value="">
   <input type="button" value = "확인" onclick="setLocWrapper()">
 <br/>
+<input type="button" id="button1" onclick="button1_click();" value="현재위치" />
 </form>
-<form action="">
-  <input type="button" value = "예약확인">
-<br/>
-</form>
+
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6003eb95eddd4de5a29ebabc0f0d19a7&libraries=services"></script>
 <script src="./index.js"> </script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="./getDB.js"> </script>
+<script src="./realTimeAirport.js"> </script>
+<script src="./realTimePL.js"> </script>
 
- 
+
 </div>
